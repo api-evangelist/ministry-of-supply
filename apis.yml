@@ -1,23 +1,119 @@
 aid: ministry-of-supply
 name: Ministry of Supply
-description: 'Ministry of Supply is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Ministry of Supply is a Boston-based performance apparel company founded in 2011 out of MIT, engineering
+  technical dress shirts, pants, suits, knitwear and outerwear for work, travel and commuting using
+  temperature-regulating, wrinkle-resistant and stretch-recovery fabrics. It sells direct to consumer from a
+  Shopify storefront at ministryofsupply.com. Its API surface is not a developer program but an agentic
+  commerce surface: the store publishes an agents.md / llms.txt instruction document, a Universal Commerce
+  Protocol (UCP) merchant profile at /.well-known/ucp, and a live, anonymously-callable Model Context Protocol
+  endpoint at /api/ucp/mcp exposing thirteen catalog, cart, checkout and order tools with full JSON Schema
+  inputs, plus Shopify customer-account OpenID Connect discovery documents. Checkout requires contemporaneous
+  human approval; complete_checkout requires an idempotency key.
+image: https://www.ministryofsupply.com/cdn/shop/files/Ministry_of_Supply_-_Stacked_-_Square_-_Black.jpg?v=1728528819
 url: https://raw.githubusercontent.com/api-evangelist/ministry-of-supply/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-25'
 modified: '2026-08-25'
 tags:
 - Company
-apis: []
+- Apparel
+- Retail
+- E-Commerce
+- Direct To Consumer
+- Agentic Commerce
+- Model Context Protocol
+- Universal Commerce Protocol
+- Shopify
+- Manufacturing
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Ministry of Supply Agentic Commerce API (UCP / MCP)
+  description: >-
+    The store's Universal Commerce Protocol service, exposed over MCP at /api/ucp/mcp. An anonymous
+    tools/list returns thirteen tools covering catalog search and lookup, product detail, cart create /
+    read / update / cancel, checkout create / read / update / complete / cancel, and order lookup. Payment
+    completion requires explicit buyer approval and an idempotency key.
+  humanURL: https://www.ministryofsupply.com/agents.md
+  baseURL: https://www.ministryofsupply.com/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - Model Context Protocol
+  - Universal Commerce Protocol
+  - Commerce
+  properties:
+  - type: MCPServer
+    url: mcp/ministry-of-supply-mcp.yml
+  - type: Documentation
+    url: https://www.ministryofsupply.com/agents.md
+- name: Ministry of Supply Storefront JSON
+  description: >-
+    Read-only, unauthenticated storefront JSON the store's own agents.md points agents at — /products.json,
+    /collections.json, /products/{handle}.json, /collections/{handle}/products.json and /search. Shopify
+    platform endpoints served from the merchant's own host and explicitly documented by the merchant for
+    agent use.
+  humanURL: https://www.ministryofsupply.com/agents.md
+  baseURL: https://www.ministryofsupply.com
+  tags:
+  - Catalog
+  - Products
+  - E-Commerce
 common:
+- type: DomainSecurity
+  url: security/ministry-of-supply-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/ministry-of-supply_stock/
+  url: https://www.ministryofsupply.com/
+- type: Documentation
+  url: https://www.ministryofsupply.com/agents.md
+- type: LLMsTxt
+  url: llms/ministry-of-supply-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/ministry-of-supply-mcp.yml
+- type: WellKnown
+  url: well-known/ministry-of-supply-well-known.yml
+- type: Authentication
+  url: authentication/ministry-of-supply-authentication.yml
+- type: OAuthScopes
+  url: scopes/ministry-of-supply-scopes.yml
+- type: Conventions
+  url: conventions/ministry-of-supply-conventions.yml
+- type: Idempotency
+  url: conventions/ministry-of-supply-conventions.yml
+- type: Conformance
+  url: conformance/ministry-of-supply-conformance.yml
+- type: Lifecycle
+  url: lifecycle/ministry-of-supply-lifecycle.yml
+- type: DataModel
+  url: data-model/ministry-of-supply-data-model.yml
+- type: ErrorCatalog
+  url: errors/ministry-of-supply-problem-types.yml
+- type: RateLimits
+  url: rate-limits/ministry-of-supply-rate-limits.yml
+- type: Plans
+  url: plans/ministry-of-supply-plans-pricing.yml
+- type: Packages
+  url: packages/ministry-of-supply-packages.yml
+- type: Support
+  url: https://www.ministryofsupply.com/pages/service
+- type: Blog
+  url: https://www.ministryofsupply.com/blogs/news
+- type: Login
+  url: https://www.ministryofsupply.com/account/login
+- type: TermsOfService
+  url: https://www.ministryofsupply.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.ministryofsupply.com/policies/privacy-policy
+
+x-enrichment:
+  date: '2026-08-25'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

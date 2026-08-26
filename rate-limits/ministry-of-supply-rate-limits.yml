@@ -1,0 +1,25 @@
+generated: '2026-08-25'
+method: searched
+source: https://www.ministryofsupply.com/llms.txt
+docs: https://www.ministryofsupply.com/agents.md
+limit_count: 0
+note: >-
+  The merchant documents that rate limiting exists and names the exhaustion status, but publishes no
+  number, window, or response headers — so there is a runtime signal an agent can honour (429 + back off)
+  but no quota an agent can plan against. Recorded as limit_count 0 because no numeric limit is published.
+limits:
+- scope: per-ip
+  applies_to: https://www.ministryofsupply.com/api/ucp/mcp
+  window: not published
+  limit: not published
+  burst: not published
+  quote: '"Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses."'
+response_signals:
+  status_on_exhaustion: 429
+  headers:
+    x_ratelimit: not published
+    ratelimit: not published
+    retry_after: not published
+  observed: >-
+    A single anonymous tools/list POST on 2026-08-25 returned HTTP 200 and carried no RateLimit-*,
+    X-RateLimit-* or Retry-After header, so no limit could be read from a live response.

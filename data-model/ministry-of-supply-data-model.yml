@@ -1,0 +1,97 @@
+generated: '2026-08-25'
+method: derived
+source: mcp/ministry-of-supply-mcp-tools-list.json
+note: >-
+  Derived from the JSON Schema 2020-12 inputSchemas returned by the live MCP tools/list. There is no
+  OpenAPI, so only the REQUEST side of each entity is observable; response shapes are not published in
+  tools/list and are therefore not modelled here.
+identifier_scheme:
+  style: Shopify GID
+  patterns:
+  - 'gid://shopify/Cart/{id}'
+  - 'gid://shopify/Checkout/{id}'
+  - 'gid://shopify/Order/{id}'
+money:
+  representation: '{amount: <integer minor units>, currency: <ISO 4217>}'
+entities:
+- name: Product
+  domain: catalog
+  read_by: [get_product, lookup_catalog, search_catalog]
+  fields:
+  - {name: id, type: string, note: Product ID}
+  - {name: selected, type: array, note: Selected variant options (name/label pairs)}
+- name: ProductVariant
+  domain: catalog
+  note: Referenced from cart line items as item.id ("The Product Variant ID to add or update").
+- name: Cart
+  domain: cart
+  created_by: create_cart
+  read_by: [get_cart]
+  updated_by: [update_cart]
+  cancelled_by: [cancel_cart]
+  fields:
+  - {name: line_items, type: array}
+  - {name: buyer, type: object}
+  - {name: context, type: object}
+  - {name: attribution, type: object}
+- name: LineItem
+  domain: cart
+  fields:
+  - {name: id, type: string}
+  - {name: quantity, type: integer, required: true}
+  - {name: item.id, type: string, required: true, note: Product Variant ID}
+- name: Buyer
+  domain: cart
+  fields:
+  - {name: email, type: string, format: email}
+  - {name: phone_number, type: string}
+- name: BuyerContext
+  domain: shared
+  used_by: [search_catalog, get_product, lookup_catalog, create_cart, update_cart, create_checkout]
+  fields:
+  - {name: address_country, type: string, note: ISO 3166-1 alpha-2}
+  - {name: address_region, type: string}
+  - {name: postal_code, type: string}
+  - {name: language, type: string, note: IETF BCP 47}
+  - {name: currency, type: string, note: ISO 4217}
+  - {name: intent, type: string}
+  - {name: eligibility, type: array, note: reverse-domain benefit claims}
+- name: Checkout
+  domain: checkout
+  created_by: create_checkout
+  read_by: [get_checkout]
+  updated_by: [update_checkout]
+  completed_by: complete_checkout
+  cancelled_by: cancel_checkout
+  fields:
+  - {name: payment, type: object}
+  - {name: line_items, type: array}
+- name: PaymentInstrument
+  domain: checkout
+  fields:
+  - {name: id, type: string, required: true}
+  - {name: handler_id, type: string, required: true, note: Identifier of the payment handler that generated the instrument}
+  - {name: type, type: string, required: true}
+  - {name: billing_address, type: object, note: required when handler_id is apple-pay}
+  - {name: credential, type: object, note: requires token+type, or apple_pay_token payment_data for Apple Pay}
+- name: Address
+  domain: shared
+  fields:
+  - {name: street_address, type: string}
+  - {name: extended_address, type: string}
+  - {name: address_locality, type: string}
+  - {name: address_region, type: string}
+- name: Order
+  domain: order
+  read_by: [get_order]
+  note: Created as the result of complete_checkout; no create/update/cancel tool exists.
+relationships:
+- {from: Cart, to: LineItem, kind: has_many, via: line_items}
+- {from: LineItem, to: ProductVariant, kind: belongs_to, via: item.id}
+- {from: Cart, to: Buyer, kind: has_one, via: buyer}
+- {from: Cart, to: BuyerContext, kind: has_one, via: context}
+- {from: Checkout, to: LineItem, kind: has_many, via: line_items}
+- {from: Checkout, to: PaymentInstrument, kind: has_many, via: payment.instruments}
+- {from: PaymentInstrument, to: Address, kind: has_one, via: billing_address}
+- {from: Product, to: ProductVariant, kind: has_many, via: variant options}
+- {from: Order, to: Checkout, kind: belongs_to, via: complete_checkout result}

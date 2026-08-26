@@ -1,0 +1,47 @@
+generated: '2026-08-25'
+method: derived
+source: >-
+  mcp/ministry-of-supply-mcp-tools-list.json (transport observed live),
+  https://www.ministryofsupply.com/llms.txt
+format: jsonrpc-2.0
+note: >-
+  Ministry of Supply publishes no error reference. The MCP endpoint speaks JSON-RPC 2.0, so failures
+  arrive as a top-level "error" member ({code, message, data}) rather than RFC 9457 problem+json. The one
+  error condition the merchant documents in prose is HTTP 429 rate limiting. Nothing below is invented:
+  every entry cites either the observed transport or a published sentence.
+envelope:
+  field: error
+  shape: '{"jsonrpc":"2.0","id":<id>,"error":{"code":<int>,"message":<string>,"data":<any>}}'
+  evidence: >-
+    The live tools/list response is a well-formed JSON-RPC 2.0 envelope
+    ({"jsonrpc":"2.0","id":1,"result":{...}}), so the error branch is the JSON-RPC 2.0 error object.
+problems:
+- status: 429
+  code: null
+  title: Rate limited
+  detail: The MCP endpoint is rate-limited per IP.
+  remediation: Back off and retry.
+  source: https://www.ministryofsupply.com/llms.txt
+  method: searched
+- status: null
+  code: -32600
+  title: Invalid Request
+  detail: Standard JSON-RPC 2.0 error class; applies because the endpoint speaks JSON-RPC 2.0.
+  method: derived
+- status: null
+  code: -32601
+  title: Method not found
+  detail: Standard JSON-RPC 2.0 error class.
+  method: derived
+- status: null
+  code: -32602
+  title: Invalid params
+  detail: >-
+    Standard JSON-RPC 2.0 error class; the tool inputSchemas make meta.ucp-agent.profile required on
+    every tool and meta.idempotency-key required on complete_checkout, so omitting either is an
+    invalid-params condition.
+  method: derived
+gaps:
+- No provider error registry or error-code reference is published.
+- No mapping from JSON-RPC error codes to UCP domain failures (out of stock, address unsupported,
+  payment declined) is published anonymously; those were not observed because no write call was made.

@@ -1,0 +1,89 @@
+generated: '2026-08-25'
+method: probed
+status: published
+source: https://www.ministryofsupply.com/api/ucp/mcp
+discovery:
+  robots_txt: https://www.ministryofsupply.com/robots.txt
+  llms_txt: https://www.ministryofsupply.com/llms.txt
+  agents_md: https://www.ministryofsupply.com/agents.md
+  ucp_profile: https://www.ministryofsupply.com/.well-known/ucp
+deployment:
+  mode: remote
+  endpoint: https://www.ministryofsupply.com/api/ucp/mcp
+  auth: none
+  verified: probed
+server:
+  name: ministry-of-supply-ucp
+  transport: http
+  url: https://www.ministryofsupply.com/api/ucp/mcp
+  protocol: Universal Commerce Protocol (UCP)
+  ucp_versions:
+  - '2026-04-08'
+  - '2026-01-23'
+  canonical_endpoint_in_profile: https://mostrial.myshopify.com/api/ucp/mcp
+  platform: Shopify
+  ownership_note: >-
+    The MCP endpoint is served from the company's own apex host and its UCP merchant profile names
+    merchant "Ministry of Supply" with merchant_origin www.ministryofsupply.com and Shopify shop_id
+    3092321. The .well-known/ucp profile lists the canonical service endpoint on the merchant's Shopify
+    shop domain mostrial.myshopify.com ("MOS" = Ministry of Supply); both hosts answer and both belong to
+    this merchant. The tool implementations are Shopify-platform-provided, UCP-native; the deployment,
+    catalog and checkout behind them are Ministry of Supply's.
+x-evidence:
+  fetched: '2026-08-25'
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 200
+  content_type: application/json
+  tools_returned: 13
+  raw: mcp/ministry-of-supply-mcp-tools-list.json
+tool_count: 13
+tools:
+- name: search_catalog
+  category: catalog
+  description: Search for products from the online store, hosted on Shopify.
+- name: lookup_catalog
+  category: catalog
+  description: Look up multiple products or variants by identifier.
+- name: get_product
+  category: catalog
+  description: Retrieve complete product detail by identifier. Returns a singular product.
+- name: create_cart
+  category: cart
+  description: Creates a new cart.
+- name: get_cart
+  category: cart
+  description: Get the cart contents.
+- name: update_cart
+  category: cart
+  description: Perform updates to a cart.
+- name: cancel_cart
+  category: cart
+  description: Cancels a cart.
+- name: create_checkout
+  category: checkout
+  description: Creates a checkout. Returns checkout details, including line items, totals, discounts and taxes.
+- name: get_checkout
+  category: checkout
+  description: Returns details about the checkout, including line items, totals, discounts and taxes.
+- name: update_checkout
+  category: checkout
+  description: Updates a checkout.
+- name: complete_checkout
+  category: checkout
+  description: >-
+    Completes a checkout and returns the checkout result, including order ID and Thank You Page URL.
+    Requires meta.idempotency-key. Buyer approval is required before payment.
+  requires_idempotency_key: true
+- name: cancel_checkout
+  category: checkout
+  description: Cancels a checkout.
+- name: get_order
+  category: order
+  description: Get the details of an order.
+notes:
+- Every tool requires meta.ucp-agent.profile — a URI identifying the calling agent's UCP profile.
+- Only complete_checkout requires meta.idempotency-key.
+- Identifiers are Shopify GIDs (gid://shopify/Checkout/..., gid://shopify/Cart/..., gid://shopify/Order/...).
+- Prices are integers in ISO 4217 minor units paired with a currency code.
+- No OpenAPI is published; the MCP inputSchema set in the saved tools/list IS the machine-readable contract.

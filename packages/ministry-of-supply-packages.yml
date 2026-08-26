@@ -1,0 +1,26 @@
+generated: '2026-08-25'
+method: searched
+source: >-
+  npm registry, PyPI, RubyGems, crates.io, pkg.go.dev, Packagist, NuGet, Maven Central,
+  https://www.ministryofsupply.com/agents.md, https://www.ministryofsupply.com/llms.txt
+package_count: 0
+packages: []
+note: >-
+  No first-party Ministry of Supply client library exists on any public registry, and the company's own
+  agent instructions point agents at a protocol (UCP over MCP) and a third-party skill
+  (https://shop.app/SKILL.md, published by Shopify, not by Ministry of Supply) rather than at an SDK. A
+  GitHub account exists at github.com/ministryofsupply but it is a personal user account with 0 public
+  repositories, no name, company or bio, so it could not be confirmed as the company's org and no
+  GitHubOrganization pointer was emitted. No SDKs pointer emitted — there is no SDK to point at.
+related_but_not_first_party:
+- name: Shop skill
+  url: https://shop.app/SKILL.md
+  publisher: Shopify
+  official: false
+  version: null
+  published: null
+  registry: null
+  note: >-
+    Recommended by the merchant's own llms.txt for buy-for-me agents, but published and versioned by
+    Shopify across every Shopify store — not a Ministry of Supply artifact. No registry metadata endpoint
+    exists for it and the URL is unpinned, so a consumer cannot tell which revision they are fetching.

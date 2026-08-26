@@ -1,0 +1,55 @@
+generated: '2026-08-25'
+method: probed
+source: >-
+  https://www.ministryofsupply.com/.well-known/openid-configuration,
+  https://www.ministryofsupply.com/.well-known/oauth-protected-resource,
+  https://www.ministryofsupply.com/api/ucp/mcp (tools/list),
+  https://www.ministryofsupply.com/llms.txt
+docs: https://www.ministryofsupply.com/agents.md
+summary:
+  types: [none, openIdConnect, oauth2]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, refreshToken, jwt-bearer]
+  note: >-
+    Two distinct auth postures. (1) The UCP/MCP commerce endpoint accepts anonymous calls — tools/list
+    returned 200 with no credential — and identity is carried per-call as an agent profile URI in
+    meta.ucp-agent.profile rather than as a bearer token. Payment authorization is delegated to a payment
+    handler with contemporaneous human approval, so the agent never holds a card credential. (2) Customer
+    accounts use Shopify Customer Accounts OpenID Connect, with the merchant's own issuer.
+schemes:
+- name: ucp-agent-profile
+  type: none
+  description: >-
+    Every MCP tool requires meta.ucp-agent.profile, a URI identifying the calling agent's UCP profile.
+    This is an identity declaration, not a credential — the endpoint answers unauthenticated.
+  sources: [mcp/ministry-of-supply-mcp-tools-list.json]
+- name: shopify-customer-accounts-oidc
+  type: openIdConnect
+  openIdConnectUrl: https://www.ministryofsupply.com/.well-known/openid-configuration
+  issuer: https://shopify.com/authentication/3092321
+  authorizationUrl: https://shopify.com/authentication/3092321/oauth/authorize
+  tokenUrl: https://shopify.com/authentication/3092321/oauth/token
+  jwks_uri: https://shopify.com/authentication/3092321/.well-known/jwks.json
+  end_session_endpoint: https://shopify.com/authentication/3092321/logout
+  grant_types: [authorization_code, refresh_token, 'urn:ietf:params:oauth:grant-type:jwt-bearer']
+  response_types: [code]
+  pkce: [S256]
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post]
+  id_token_signing_alg: [RS256]
+  bearer_methods_supported: [header]
+  protected_resource: https://www.ministryofsupply.com
+  sources: [well-known/ministry-of-supply-openid-configuration.json, well-known/ministry-of-supply-oauth-protected-resource.json]
+payment_authorization:
+  model: buyer-approved payment handler
+  handlers:
+  - id: gpay
+    name: com.google.pay
+    merchant_name: Ministry of Supply
+    merchant_origin: www.ministryofsupply.com
+  - id: shopify.card
+    name: dev.shopify.card
+  - id: shop_pay
+    name: dev.shopify.shop_pay
+  rule: >-
+    "Checkout requires human approval. Agents must not complete payment without explicit buyer consent."
+    — https://www.ministryofsupply.com/llms.txt

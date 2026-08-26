@@ -1,0 +1,42 @@
+generated: '2026-08-25'
+method: probed
+source: live GET of /.well-known/* on the Ministry of Supply storefront host
+note: >-
+  Four documents returned 200 with real machine-readable bodies and were saved. The three OAuth/OIDC
+  documents are Shopify Customer Accounts discovery, served from the merchant's own host and pointing at
+  the merchant's own Shopify authentication issuer (shopify.com/authentication/3092321). The /.well-known/ucp
+  document is the store's Universal Commerce Protocol merchant profile and names "Ministry of Supply" as the
+  merchant with merchant_origin www.ministryofsupply.com. security.txt, api-catalog, ai-plugin.json,
+  agent-card.json and agent.json all 404 with the storefront's real 404 page (not a catch-all 200).
+hit_count: 5
+hosts:
+- host: https://www.ministryofsupply.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: ministry-of-supply-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: ministry-of-supply-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: ministry-of-supply-oauth-protected-resource.json
+  - path: /.well-known/ucp
+    status: 200
+    file: ministry-of-supply-ucp.json
+  - path: /.well-known/ucp.json
+    status: 200
+    file: ministry-of-supply-ucp.json
+    note: Same document is served at both the extensionless and .json paths.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404

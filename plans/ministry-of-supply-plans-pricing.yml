@@ -1,0 +1,17 @@
+generated: '2026-08-25'
+method: searched
+source: >-
+  https://www.ministryofsupply.com/llms.txt,
+  https://www.ministryofsupply.com/agents.md,
+  https://www.ministryofsupply.com/.well-known/ucp
+plan_count: 0
+plans: []
+note: >-
+  Ministry of Supply sells clothing, not API access. The UCP/MCP commerce endpoint is free and anonymous —
+  there is no developer plan, no API key, no metered tier and no pricing page for the agent surface. The
+  only prices the company publishes are retail product prices, returned per-product by search_catalog /
+  get_product in ISO 4217 minor units. This is an honest zero, not a missing page.
+access_model:
+  cost_to_call: none
+  registration_required: false
+  gate: none for catalog/cart/checkout construction; buyer approval required to complete payment

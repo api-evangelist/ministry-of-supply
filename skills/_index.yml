@@ -1,0 +1,27 @@
+generated: '2026-08-25'
+method: searched
+note: >-
+  ministry-of-supply-agents.md is the merchant's OWN agent instruction document, fetched verbatim from
+  https://www.ministryofsupply.com/agents.md (HTTP 200, text/markdown) and listed by the store in
+  sitemap_agentic_discovery.xml. The other two are API Evangelist skills generated from the live MCP
+  tools/list; every tool name in them was verified against mcp/ministry-of-supply-mcp-tools-list.json.
+skills:
+- file: ministry-of-supply-agents.md
+  name: Agent Instructions — Ministry of Supply
+  method: searched
+  source: https://www.ministryofsupply.com/agents.md
+  api: mcp/ministry-of-supply-mcp.yml
+  publisher: Ministry of Supply
+  operations: [search_catalog, create_cart, create_checkout, update_checkout, complete_checkout]
+- file: ministry-of-supply-browse-catalog.md
+  name: Browse the Ministry of Supply catalog
+  method: generated
+  source: mcp/ministry-of-supply-mcp-tools-list.json
+  api: mcp/ministry-of-supply-mcp.yml
+  operations: [search_catalog, lookup_catalog, get_product]
+- file: ministry-of-supply-cart-and-checkout.md
+  name: Build a cart and take a Ministry of Supply checkout to buyer approval
+  method: generated
+  source: mcp/ministry-of-supply-mcp-tools-list.json
+  api: mcp/ministry-of-supply-mcp.yml
+  operations: [create_cart, update_cart, get_cart, create_checkout, update_checkout, get_checkout, complete_checkout, cancel_cart, cancel_checkout]

@@ -1,0 +1,34 @@
+generated: '2026-08-25'
+method: probed
+source: >-
+  https://www.ministryofsupply.com/.well-known/ucp,
+  https://www.ministryofsupply.com/llms.txt
+versioning:
+  scheme: date
+  current: '2026-04-08'
+  supported: ['2026-04-08', '2026-01-23']
+  negotiation: >-
+    /.well-known/ucp advertises supported_versions as a map of version -> dated profile URL. Capabilities
+    carry their own version and, where relevant, a requires.protocol.min floor (dev.ucp.shopping.fulfillment,
+    dev.ucp.shopping.discount and dev.shopify.catalog all require protocol min 2026-04-08).
+  docs: https://ucp.dev/2026-04-08/specification/overview/
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    No deprecation or sunset policy is published by the merchant. Version retirement follows the upstream
+    UCP protocol and the Shopify platform; 2026-01-23 remains advertised alongside 2026-04-08, which is
+    the only observable deprecation signal. No Deprecation pointer emitted.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  note: >-
+    status.ministryofsupply.com does not resolve (curl exit 6, no HTTP response). The store runs on
+    Shopify, whose platform status page is shopifystatus.com, but that is Shopify's page and not the
+    merchant's, so no StatusPage pointer is emitted.
+changelog:
+  url: null
+  note: No dated API changelog is published for the store's agent surface.
+deprecated_operations: []

@@ -1,0 +1,131 @@
+generated: '2026-08-25'
+method: probed
+source: >-
+  https://www.ministryofsupply.com/api/ucp/mcp (tools/list, 200),
+  https://www.ministryofsupply.com/llms.txt,
+  https://www.ministryofsupply.com/robots.txt,
+  https://www.ministryofsupply.com/policies/refund-policy
+docs: https://www.ministryofsupply.com/agents.md
+interface_style: MCP (JSON-RPC 2.0 over HTTP), Universal Commerce Protocol 2026-04-08
+authentication:
+  style: anonymous; per-call agent identity via meta.ucp-agent.profile
+  see: authentication/ministry-of-supply-authentication.yml
+idempotency:
+  supported: true
+  mechanism: request field
+  field: meta.idempotency-key
+  scope: complete_checkout only
+  required: true
+  retention: not published
+  evidence: >-
+    complete_checkout inputSchema declares meta.idempotency-key as a required string, "An idempotency key
+    for completing the checkout" — see mcp/ministry-of-supply-mcp-tools-list.json. No other tool declares
+    it; cart and checkout mutations are addressed by GID and are therefore naturally re-targetable.
+  note: >-
+    Idempotency is scoped precisely to the one irreversible-money operation, which is the correct placement,
+    but no retention window for the key is published.
+reversibility:
+  grade: verified
+  applicable: true
+  surfaces:
+  - operation: cancel_cart
+    reverses: create_cart / update_cart
+    window: any time before the cart is converted to a completed checkout
+    window_stated: false
+    docs: https://www.ministryofsupply.com/agents.md
+    note: Tool exists and is callable; the docs do not state an explicit time window.
+  - operation: cancel_checkout
+    reverses: create_checkout / update_checkout
+    window: before complete_checkout is called (payment not yet captured)
+    window_stated: false
+    docs: https://www.ministryofsupply.com/agents.md
+    note: >-
+      The agent flow in llms.txt puts complete_checkout last and states payment requires buyer approval,
+      so cancel_checkout is the pre-capture reversal. No explicit duration is published.
+  - operation: complete_checkout
+    reverses: null
+    reversal_path: return / refund, out of band — not exposed as an MCP tool
+    window: 30 days from purchase
+    window_stated: true
+    docs: https://www.ministryofsupply.com/policies/refund-policy
+    quote: >-
+      "We offer returns within 30 days of purchase. Items must be unworn, unwashed, and in original
+      condition with tags attached."
+    conditions:
+    - Final Sale items cannot be returned or exchanged.
+    - Refunds processed 5-10 business days after the return is received.
+    - Printed return label costs $7; international returns deduct $25.
+    note: >-
+      There is a stated reversal window on the completed order, but no API operation performs the
+      reversal — an agent cannot refund or cancel an order through the MCP surface. get_order is
+      read-only. The reversal is a human/support path.
+  summary: >-
+    Pre-payment reversal is a first-class operation (cancel_cart, cancel_checkout). Post-payment reversal
+    has a published 30-day window but no programmatic path.
+dry_run_mode:
+  supported: false
+  note: No test/sandbox mode is published for the UCP/MCP endpoint. See sandbox note below.
+pagination:
+  style: cursor
+  request_params:
+    cursor: catalog.pagination.cursor
+    limit: catalog.pagination.limit
+  default_limit: 10
+  min_limit: 1
+  max_limit: not published
+  applies_to: [search_catalog]
+  response_fields: not published (tools/list describes inputs only)
+  evidence: >-
+    search_catalog inputSchema declares catalog.pagination as an object with a string "cursor" and an
+    integer "limit" (default 10, minimum 1).
+versioning:
+  scheme: date
+  current: '2026-04-08'
+  supported: ['2026-04-08', '2026-01-23']
+  negotiation: >-
+    Version-specific profiles are advertised in /.well-known/ucp under supported_versions, each resolving
+    to a dated profile document.
+  see: lifecycle/ministry-of-supply-lifecycle.yml
+error_envelope:
+  style: JSON-RPC 2.0 error object
+  note: >-
+    The transport is JSON-RPC 2.0, so failures surface as a top-level "error" member with code/message.
+    No provider-specific error registry is published. See errors/ministry-of-supply-problem-types.yml.
+rate_limit_signaling:
+  documented: true
+  headers: not published
+  status_on_exhaustion: 429
+  quote: '"Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses."'
+  source: https://www.ministryofsupply.com/llms.txt
+  see: rate-limits/ministry-of-supply-rate-limits.yml
+money_representation:
+  format: integer minor units + ISO 4217 currency code
+  example: '{"amount": 2500, "currency": "USD"} is $25.00'
+  note: Stated in every tool description; zero-decimal currencies such as JPY are whole units.
+identifiers:
+  style: Shopify GID
+  examples:
+  - gid://shopify/Checkout/abc123
+  - gid://shopify/Cart/abc123
+  - gid://shopify/Order/123
+buyer_context:
+  fields: [context.address_country, context.currency]
+  note: llms.txt asks agents to pass these for accurate pricing and availability.
+agent_policy:
+  human_in_the_loop: required for payment
+  quote: >-
+    "Checkouts are for humans. Do NOT complete checkout, payment, or order placement automatically — no
+    scripted form fills, browser automation, or end-to-end agent flows that finalize payment without an
+    explicit, contemporaneous human approval step."
+  source: https://www.ministryofsupply.com/robots.txt
+  disallowed_for_agents:
+  - /cart.js
+  - /recommendations/products
+  redirect: Agents are told to use the UCP/MCP endpoints or the Shop skill instead of AJAX/scraping.
+cross_links:
+  authentication: authentication/ministry-of-supply-authentication.yml
+  scopes: scopes/ministry-of-supply-scopes.yml
+  errors: errors/ministry-of-supply-problem-types.yml
+  lifecycle: lifecycle/ministry-of-supply-lifecycle.yml
+  rate_limits: rate-limits/ministry-of-supply-rate-limits.yml
+  mcp: mcp/ministry-of-supply-mcp.yml
