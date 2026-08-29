@@ -10,6 +10,17 @@ description: >-
   endpoint at /api/ucp/mcp exposing thirteen catalog, cart, checkout and order tools with full JSON Schema
   inputs, plus Shopify customer-account OpenID Connect discovery documents. Checkout requires contemporaneous
   human approval; complete_checkout requires an idempotency key.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.ministryofsupply.com/cdn/shop/files/Ministry_of_Supply_-_Stacked_-_Square_-_Black.jpg?v=1728528819
 url: https://raw.githubusercontent.com/api-evangelist/ministry-of-supply/refs/heads/main/apis.yml
 x-type: company
