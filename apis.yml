@@ -21,6 +21,21 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  - scopes
+  - rate-limits
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://www.ministryofsupply.com/cdn/shop/files/Ministry_of_Supply_-_Stacked_-_Square_-_Black.jpg?v=1728528819
 url: https://raw.githubusercontent.com/api-evangelist/ministry-of-supply/refs/heads/main/apis.yml
 x-type: company
