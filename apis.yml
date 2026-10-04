@@ -94,6 +94,9 @@ apis:
     url: mcp/ministry-of-supply-mcp.yml
   - type: Documentation
     url: https://www.ministryofsupply.com/agents.md
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 - name: Ministry of Supply Storefront JSON
   description: >-
     Read-only, unauthenticated storefront JSON the store's own agents.md points agents at — /products.json,
@@ -101,7 +104,6 @@ apis:
     platform endpoints served from the merchant's own host and explicitly documented by the merchant for
     agent use.
   humanURL: https://www.ministryofsupply.com/agents.md
-  baseURL: https://www.ministryofsupply.com
   tags:
   - Catalog
   - Product
@@ -110,6 +112,9 @@ apis:
   - Catalog
   - Products
   - E-Commerce
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: storefront-json
 common:
 - type: DomainSecurity
   url: security/ministry-of-supply-domain-security.yml
