@@ -2,6 +2,20 @@
   "repo": "ministry-of-supply",
   "feeds": [
     {
+      "source": "https://www.ministryofsupply.com/blogs/news.atom",
+      "feed_url": "https://www.ministryofsupply.com/blogs/news.atom",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.ministryofsupply.com/blogs/news",
+      "feed_url": "https://www.ministryofsupply.com/blogs/news.atom",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
       "source": "https://www.ministryofsupply.com/pages/service",
       "feed_url": "https://www.ministryofsupply.com/pages/service",
       "title": "",
@@ -10,5 +24,5 @@
     }
   ],
   "post_count": 0,
-  "fetched": "2026-10-03T12:30:02Z"
+  "fetched": "2026-10-10T13:15:00Z"
 }
