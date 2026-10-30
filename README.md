@@ -64,5 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ministry of Supply is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/ministry-of-supply_stock/
+Ministry of Supply is a Boston-based performance apparel company founded in 2011 out of MIT, engineering technical dress shirts, pants, suits, knitwear and outerwear for work, travel and commuting using temperature-regulating, wrinkle-resistant and stretch-recovery fabrics. It sells direct to consumer from a Shopify storefront at ministryofsupply.com. Its API surface is not a developer program but an agentic commerce surface: the store publishes an agents.md / llms.txt instruction document, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, and a live, anonymously-callable Model Context Protocol endpoint at /api/ucp/mcp exposing thirteen catalog, cart, checkout and order tools with full JSON Schema inputs, plus Shopify customer-account OpenID Connect discovery documents. Checkout requires contemporaneous human approval; complete_checkout requires an idempotency key.
+
+**Areas:** Company · Apparel · Retail · E-Commerce · Direct to Consumer · Agentic Commerce · MCP · Universal Commerce Protocol · Shopify · Manufacturing
+
+## Ministry of Supply on APIs.io
+
+Everything profiled for Ministry of Supply is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ministry-of-supply/](https://apis.io/providers/ministry-of-supply/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Ministry of Supply Agentic Commerce API (UCP / MCP)](https://apis.io/apis/ministry-of-supply/ministry-of-supply-agentic-commerce-api-ucp-mcp/) — The store's Universal Commerce Protocol service, exposed over MCP at /api/ucp/mcp. An anonymous tools/list returns thirteen tools covering catalog search…
+- [Ministry of Supply Storefront JSON](https://apis.io/apis/ministry-of-supply/ministry-of-supply-storefront-json/) — Read-only, unauthenticated storefront JSON the store's own agents.md points agents at — /products.json, /collections.json, /products/{handle}.json,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [ministry-of-supply-ucp](https://apis.io/servers/ministry-of-supply/ministry-of-supply-ucp/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ministry Of Supply Authentication](https://apis.io/security/ministry-of-supply/ministry-of-supply-authentication/)
+- [Ministry Of Supply Domain Security](https://apis.io/security/ministry-of-supply/ministry-of-supply-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Ministry Of Supply Scopes](https://apis.io/scopes/ministry-of-supply/ministry-of-supply-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ministry Of Supply Plans Pricing](https://apis.io/plans/ministry-of-supply/ministry-of-supply-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ministry Of Supply Rate Limits](https://apis.io/rate-limits/ministry-of-supply/ministry-of-supply-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.ministryofsupply.com/)
+- [Documentation](https://www.ministryofsupply.com/agents.md)
+- [Support](https://www.ministryofsupply.com/pages/service)
+- [Blog](https://www.ministryofsupply.com/blogs/news)
+- [Terms of service](https://www.ministryofsupply.com/policies/terms-of-service)
+- [Privacy policy](https://www.ministryofsupply.com/policies/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 27.1** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.7 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 27.6 |
+
+**Agent readiness 27.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ministry-of-supply/](https://apis.io/providers/ministry-of-supply/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ministry of Supply: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ministry-of-supply/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
